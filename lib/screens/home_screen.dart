@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movies/providers/movies_provider.dart';
+import 'package:movies/search/search_delegate.dart';
 import 'package:movies/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -14,10 +15,10 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Movies'),
+        title: const Text('Peliculas en cine'),
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () => showSearch(context: context, delegate: MovieSearchDelegate()),
               icon: const Icon( Icons.search_outlined )
           )
         ],
@@ -29,7 +30,11 @@ class HomeScreen extends StatelessWidget {
             // Tarjetas principales
             CardSwiper( movies: moviesProvider.onDisplayMovies ),
             // Slider de peliculas
-            MovieSlider(movies: moviesProvider.popularMovies, title: 'Populares'),
+            MovieSlider(
+                movies: moviesProvider.popularMovies,
+                onNextPage: () => moviesProvider.getPopularMovies(),
+                title: 'Populares'
+            ),
 
           ],
         ),
